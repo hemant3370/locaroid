@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/service"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="150dp"
+        android:layout_below="@+id/service"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/mobile"
+        android:layout_width="150dp"
+        android:layout_below="@+id/distance"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/lati"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/service"
+        android:layout_toRightOf="@+id/service"
+         />
+
+    <TextView
+        android:id="@+id/longi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/lati"
+        android:layout_toEndOf="@+id/distance"
+        android:layout_toRightOf="@+id/distance"
+         />
+    <TextView
+        android:id="@+id/gname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/longi"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        
+        android:layout_toEndOf="@+id/mobile"
+        android:layout_toRightOf="@+id/mobile"
+         />
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonhelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Help" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:text="This application helps you to upload your location and specify the purpose behind it and at the same time know other people&apos;s location and the ir motive behind uploading their location."
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="22sp" />
+
+</LinearLayout>

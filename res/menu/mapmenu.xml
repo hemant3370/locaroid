@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/sat"
+        android:title="@string/Satellite"/>
+    <item android:id="@+id/normal"
+        android:title="@string/Normal"/>
+    <item android:id="@+id/hybrid"
+        android:title="@string/hybrid"/>
+
+</menu>
