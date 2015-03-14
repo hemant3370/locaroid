@@ -138,11 +138,11 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		/*
-		 * boolean gpsenabled =
-		 * locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER); if
-		 * (!gpsenabled) { Intent gpsintent = new
-		 * Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-		 * startActivity(gpsintent); }
+		  boolean gpsenabled =
+		  locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER); if
+		  (!gpsenabled) { Intent gpsintent = new
+		  Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		  startActivity(gpsintent); }
 		 */
 		// regintservice = new Registerintentservice("name");
 		// regintservice.onCreate();
@@ -216,7 +216,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void register(View view) {
-		// TODO Auto-generated method stub
+		
 		String username = usernameField.getText().toString();
 		String password = passwordField.getText().toString();
 		present_mobile = mobileField.getText().toString();
