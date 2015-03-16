@@ -8,14 +8,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Registeractivity extends AsyncTask<String, String, JSONObject> {
 
@@ -38,7 +36,7 @@ public class Registeractivity extends AsyncTask<String, String, JSONObject> {
 
 		try {
 
-			String username = (String) arg0[0];
+			String username = arg0[0];
 			// String password = (String)arg0[1];
 			// String mobile = (String)arg0[2];
 			// String link =

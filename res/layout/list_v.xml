@@ -7,20 +7,24 @@
     <TextView
         android:id="@+id/service"
         android:layout_width="150dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:typeface="monospace"
+         />
 
     <TextView
         android:id="@+id/distance"
         android:layout_width="150dp"
         android:layout_below="@+id/service"
         android:layout_height="wrap_content"
+        android:typeface="monospace"
         />
 
     <TextView
         android:id="@+id/mobile"
         android:layout_width="150dp"
         android:layout_below="@+id/distance"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" 
+        android:typeface="monospace"/>
 
     <TextView
         android:id="@+id/lati"
@@ -31,6 +35,7 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/service"
         android:layout_toRightOf="@+id/service"
+        android:typeface="monospace"
          />
 
     <TextView
@@ -42,6 +47,7 @@
         android:layout_below="@+id/lati"
         android:layout_toEndOf="@+id/distance"
         android:layout_toRightOf="@+id/distance"
+        android:typeface="monospace"
          />
     <TextView
         android:id="@+id/gname"
@@ -53,5 +59,6 @@
         
         android:layout_toEndOf="@+id/mobile"
         android:layout_toRightOf="@+id/mobile"
+        android:typeface="monospace"
          />
 </RelativeLayout>

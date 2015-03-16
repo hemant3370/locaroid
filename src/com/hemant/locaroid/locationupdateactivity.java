@@ -28,6 +28,7 @@ public class locationupdateactivity extends
 		this.context = ctx;
 	}
 
+	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		pDialog = new ProgressDialog(context);
@@ -49,11 +50,11 @@ public class locationupdateactivity extends
 			// "http://10.2.2.0:82/locaroid/geoupdate.php?longitude="
 			// +longitude+"&latitude="+latitude+"&service="+service+"&username="+usname;
 			String link = "http://locationservices.site40.net/locaroid/geoupdate.php?longitude="
-					+ longitude
-					+ "&latitude="
-					+ latitude
-					+ "&service="
-					+ service + "&username=" + usname;
+					+longitude
+					+"&latitude="
+					+latitude
+					+"&service="
+					+service.replaceAll(" ", "_")+"&username="+usname;
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			request.setURI(new URI(link));

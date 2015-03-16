@@ -10,15 +10,17 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -27,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,19 +42,30 @@ public class Mapview extends FragmentActivity {
 	MapView mmapview;
 	GPSTracker gps;
 	EditText et;
+	TextView tv1;
+	Typeface tf;
+	Button go;
 	private final int REQ_CODE_SPEECH_INPUT = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		tf = Typeface.createFromAsset(getApplicationContext().getAssets(),
+				"fonts/Supercell-Magic_5.ttf");
 		gps = new GPSTracker(Mapview.this);
-		et = (EditText) findViewById(R.id.editText1);
 
 		// getActionBar().hide();
 
 		if (servicesOK()) {
 			setContentView(R.layout.mapfragment);
+			tv1 = (TextView) findViewById(R.id.tv1);
+			tv1.setTypeface(tf);
+			go = (Button) findViewById(R.id.go);
+			go.setTypeface(tf);
+			go.setBackgroundColor(Color.YELLOW);
+			et = (EditText) findViewById(R.id.editText1);
+			et.setTypeface(tf);
 			if (initmap()) {
 				Toast.makeText(this, "ready to map", Toast.LENGTH_LONG).show();
 				mymap.setMyLocationEnabled(true);
@@ -77,8 +91,9 @@ public class Mapview extends FragmentActivity {
 		} else {
 			setContentView(R.layout.mapview);
 		}
-		btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
 
+		btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+		btnSpeak.setBackgroundColor(Color.YELLOW);
 		btnSpeak.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -154,6 +169,7 @@ public class Mapview extends FragmentActivity {
 		hideSoftKeyboard(v);
 
 		et = (EditText) findViewById(R.id.editText1);
+
 		String location = et.getText().toString();
 		Geocoder gc = new Geocoder(this);
 		List<android.location.Address> list = gc.getFromLocationName(location,

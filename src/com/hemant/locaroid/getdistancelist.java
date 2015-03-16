@@ -17,10 +17,17 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -29,15 +36,20 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class getdistancelist extends Activity {
+public class getdistancelist extends Activity  {
 	ListView list;
-	TextView service;
-	TextView distance;
-	TextView mobile;
+	TextView tvservice;
+	TextView tvdistance;
+	TextView tvmobile;
+	TextView tvlat;
+	TextView tvlongi;
 	Button Btngetdata;
 	public String latitude;
 	public String longitude;
 	GPSTracker gps;
+	MediaPlayer mp,mp1;
+	Animation btnanim;
+	RecyclerView rv;
 
 	// public String url =
 	// "http://10.0.2.2:82/locaroid/findwithlatlng.php?latitude=37&longitude=-122&latitude=37&radius=255555";
@@ -52,6 +64,8 @@ public class getdistancelist extends Activity {
 	private static final String TAG_arr = "nearby";
 	private static final String TAG_lati = "latitude";
 	private static final String TAG_longi = "longitude";
+	Typeface tf;
+	
 	// private static final String TAG_gname = "gname";
 
 	JSONArray android = null;
@@ -61,7 +75,14 @@ public class getdistancelist extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.receivelist);
-
+		
+		
+		btnanim = AnimationUtils.loadAnimation(getdistancelist.this,
+				R.anim.button_anim);
+		mp = MediaPlayer.create(getdistancelist.this, R.raw.elixir_collect_02);
+		mp1 = MediaPlayer.create(getdistancelist.this, R.raw.combat_planning_music);
+		tf = Typeface.createFromAsset(getApplicationContext().getAssets(),
+				"fonts/Supercell-Magic_5.ttf");
 		gps = new GPSTracker(getdistancelist.this);
 
 		this.latitude = Double.toString(gps.getLatitude());
@@ -69,6 +90,10 @@ public class getdistancelist extends Activity {
 
 		oslist = new ArrayList<HashMap<String, String>>();
 		Btngetdata = (Button) findViewById(R.id.getdata);
+		Btngetdata.setTypeface(tf);
+		Btngetdata.setBackgroundColor(Color.YELLOW);
+		Btngetdata.startAnimation(btnanim);
+
 		// latitude =
 		// longitude = mylng;
 		// url =
@@ -83,19 +108,30 @@ public class getdistancelist extends Activity {
 			@Override
 			public void onClick(View view) {
 
+				mp.start();
 				new JSONParse().execute(url);
+
 			}
 		});
 	}
-
+	@Override
+	public void onUserInteraction() {
+		// TODO Auto-generated method stub
+		mp1.start();
+		super.onUserInteraction();
+	}
 	private class JSONParse extends AsyncTask<String, String, JSONObject> {
 		private ProgressDialog pDialog;
 
+		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			service = (TextView) findViewById(R.id.service);
-			distance = (TextView) findViewById(R.id.distance);
-			mobile = (TextView) findViewById(R.id.mobile);
+			tvservice = (TextView) findViewById(R.id.service);
+			tvdistance = (TextView) findViewById(R.id.distance);
+			tvmobile = (TextView) findViewById(R.id.mobile);
+			tvlat = (TextView) findViewById(R.id.lati);
+			tvlongi = (TextView) findViewById(R.id.longi);
+
 			pDialog = new ProgressDialog(getdistancelist.this);
 			pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			// pDialog.setIndeterminate(true);
@@ -109,7 +145,7 @@ public class getdistancelist extends Activity {
 		protected JSONObject doInBackground(String... arg0) {
 
 			try {
-				String link = (String) arg0[0];
+				String link = arg0[0];
 				pDialog.setProgress(10);
 				HttpClient client = new DefaultHttpClient();
 				HttpGet request = new HttpGet();
@@ -175,6 +211,11 @@ public class getdistancelist extends Activity {
 					map.put(TAG_mobile, "Mobile Number: " + mobile);
 					map.put(TAG_lati, "Latitude:" + jlatitude);
 					map.put(TAG_longi, "Longitude:" + jlongitude);
+					/*
+					 * tvservice.setTypeface(tf); tvdistance.setTypeface(tf);
+					 * tvlongi.setTypeface(tf); tvlat.setTypeface(tf);
+					 * tvmobile.setTypeface(tf);
+					 */
 					oslist.add(map);
 					list = (ListView) findViewById(R.id.list);
 					ListAdapter adapter = new SimpleAdapter(
@@ -185,6 +226,8 @@ public class getdistancelist extends Activity {
 									R.id.service, R.id.lati, R.id.longi });
 
 					list.setAdapter(adapter);
+					list.setBackgroundColor(Color.CYAN);
+
 					list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 						@Override
 						public void onItemClick(AdapterView<?> parent,
@@ -196,6 +239,7 @@ public class getdistancelist extends Activity {
 											+ oslist.get(+position).get(
 													"service"),
 									Toast.LENGTH_SHORT).show();
+							mp1.stop();
 							Intent mapintent = new Intent(getdistancelist.this,
 									Mapview.class);
 							mapintent.putExtra("lat", oslist.get(+position)
@@ -215,5 +259,17 @@ public class getdistancelist extends Activity {
 			}
 		}
 
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		mp1.stop();
+		super.onPause();
+	}
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		mp1.stop();
+		super.onBackPressed();
 	}
 }

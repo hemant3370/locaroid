@@ -1,12 +1,8 @@
 package com.hemant.locaroid;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -14,7 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +45,7 @@ public class registerscreenactivity extends Activity {
 	private class registerfull extends AsyncTask<String, Void, String> {
 		private ProgressDialog pDialog;
 
+		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 

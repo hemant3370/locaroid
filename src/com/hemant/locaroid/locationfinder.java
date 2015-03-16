@@ -47,6 +47,7 @@ public class locationfinder extends Activity implements LocationListener {
 
 	}
 
+	@Override
 	protected void onResume() {
 		super.onResume();
 		locationManager.requestLocationUpdates(provider, 6000, 1, this);

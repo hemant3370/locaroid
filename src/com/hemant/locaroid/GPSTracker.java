@@ -3,13 +3,16 @@ package com.hemant.locaroid;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -44,7 +47,7 @@ public class GPSTracker extends Service implements LocationListener {
 	JSONObject jobj;
 	Location location; // location
 	double latitude; // latitude
-	double longitude; // longitude
+	double longitude; // longitude  
 	GoogleApiClient mygapiclient;
 
 	// The minimum distance to change Updates in meters
@@ -57,7 +60,6 @@ public class GPSTracker extends Service implements LocationListener {
 	protected LocationManager locationManager;
 	public String username;
 
-	
 	public GPSTracker(Context context) {
 		this.mContext = context;
 		getLocation();
@@ -182,6 +184,7 @@ public class GPSTracker extends Service implements LocationListener {
 		// On pressing Settings button
 		alertDialog.setPositiveButton("Settings",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(
 								Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -192,6 +195,7 @@ public class GPSTracker extends Service implements LocationListener {
 		// on pressing cancel button
 		alertDialog.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
@@ -233,9 +237,9 @@ public class GPSTracker extends Service implements LocationListener {
 
 			try {
 
-				String lat = (String) arg0[0];
-				String lng = (String) arg0[1];
-				String username = (String) arg0[2];
+				String lat = arg0[0];
+				String lng = arg0[1];
+				String username = arg0[2];
 				String link = "http://locationservices.site40.net/locaroid/coupdate.php?username="
 						+ username + "&latitude=" + lat + "&longitude" + lng;
 				HttpClient client = new DefaultHttpClient();

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/wallet_holo_blue_light"
+    android:layout_gravity="center"
      >
 
     <ImageView
@@ -15,7 +17,7 @@
         android:clickable="true" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/appname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Uploadlocation"
@@ -39,21 +41,25 @@
     />
     <Button
         android:id="@+id/button1"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Upload" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/Uploadlocation" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nearby services"
+        android:text="@string/Nearbyservices"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/Find" />
 
     <TextView

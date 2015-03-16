@@ -8,9 +8,7 @@
            android:title="@string/gsignout"/>
        <item android:id="@+id/exit"
            android:title="@string/exit"/>
-       <item android:id="@+id/fbshare"
-           android:title="@string/fbshare"
-           />
+       
        <item android:id="@+id/credits"
            android:title="@string/creds"/>
         

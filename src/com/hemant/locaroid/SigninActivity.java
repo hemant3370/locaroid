@@ -29,6 +29,7 @@ public class SigninActivity extends AsyncTask<String, Void, String> {
 
 	}
 
+	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		pDialog = new ProgressDialog(ctx);
@@ -43,8 +44,8 @@ public class SigninActivity extends AsyncTask<String, Void, String> {
 
 		try {
 
-			String username = (String) arg0[0];
-			String password = (String) arg0[1];
+			String username = arg0[0];
+			String password = arg0[1];
 			String link = "http://localhost:82/locaroid/get.php?username="
 					+ username + "&password=" + password;
 			// String link =
