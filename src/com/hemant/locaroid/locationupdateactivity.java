@@ -46,15 +46,8 @@ public class locationupdateactivity extends
 			String longitude = arg0[1];
 			String service = arg0[2];
 			String usname = arg0[3];
-			// String link =
-			// "http://10.2.2.0:82/locaroid/geoupdate.php?longitude="
-			// +longitude+"&latitude="+latitude+"&service="+service+"&username="+usname;
-			String link = "http://locationservices.site40.net/locaroid/geoupdate.php?longitude="
-					+longitude
-					+"&latitude="
-					+latitude
-					+"&service="
-					+service.replaceAll(" ", "_")+"&username="+usname;
+			// String link ="http://10.2.2.0:82/locaroid/geoupdate.php?longitude="+longitude+"&latitude="+latitude+"&service="+service.replaceAll(" ", "_")+"&username="+usname;
+			String link = "http://locationservices.site40.net/locaroid/geoupdate.php?longitude="+longitude+"&latitude="+latitude+"&service="+service.replaceAll(" ", "_")+"&username="+usname;
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			request.setURI(new URI(link));

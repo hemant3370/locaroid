@@ -17,16 +17,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.AccountPicker;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
-
-import android.R.color;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,7 +26,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -157,7 +148,7 @@ public class Menu extends FragmentActivity implements OnItemSelectedListener {
 				myservice = service.getText().toString();
 
 				mp.start();
-				if (firstupdate || bmval == null) {
+				if (firstupdate && bmval == null) {
 
 					new locupdate().execute(mystringlat, mystringlng,
 							myservice, myusername);
@@ -228,15 +219,8 @@ public class Menu extends FragmentActivity implements OnItemSelectedListener {
 				String longitude = arg0[1];
 				String service = arg0[2];
 				String usname = arg0[3];
-				// String link =
-				// "http://localhost:82/locaroid/geoupdate.php?longitude="
-				// +longitude+"&latitude="+latitude+"&service="+service+"&username="+usname;
-				String link = "http://locationservices.site40.net/locaroid/geoupdate.php?longitude="
-						+longitude
-						+"&latitude="
-						+latitude
-						+"&service="
-						+service.replaceAll(" ", "_")+"&username="+usname;
+				//String link ="http://10.0.2.2:82/locaroid/geoupdate.php?longitude="+longitude+"&latitude="+latitude+"&service="+service.replaceAll(" ", "_")+"&username="+usname;
+				String link = "http://locationservices.site40.net/locaroid/geoupdate.php?longitude="+longitude+"&latitude="+latitude+"&service="+service.replaceAll(" ", "_")+"&username="+usname;
 				HttpClient client = new DefaultHttpClient();
 				HttpGet request = new HttpGet();
 				request.setURI(new URI(link));
@@ -352,7 +336,7 @@ public class Menu extends FragmentActivity implements OnItemSelectedListener {
 		// TODO Auto-generated method stub
 		loctv.setText("latitude" + gps.getLatitude() + "longitude"
 				+ gps.getLongitude());
-		mp2.start();
+	//	mp2.start();
 		super.onUserInteraction();
 	}
 	

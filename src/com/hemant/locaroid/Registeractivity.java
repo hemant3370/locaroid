@@ -42,8 +42,7 @@ public class Registeractivity extends AsyncTask<String, String, JSONObject> {
 			// String link =
 			// "http://10.0.2.2:82/locaroid/registerget.php?username="
 			// +username+"&password="+password+"&mobile="+mobile;
-			String link = "http://locationservices.site40.net/locaroid/registerwithemailonly.php?username="
-					+ username;
+			String link = "http://locationservices.site40.net/locaroid/registerwithemailonly.php?username="+username;
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			request.setURI(new URI(link));

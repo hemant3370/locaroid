@@ -1,19 +1,14 @@
 package com.hemant.locaroid;
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 import android.app.AlertDialog;
-import android.app.Fragment;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
-import com.hemant.locaroid.GPSTracker;
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,8 +16,9 @@ import android.content.IntentSender.SendIntentException;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.location.Location;
-import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
@@ -33,21 +29,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 public class MainActivity extends FragmentActivity implements ConnectionCallbacks,
 		OnConnectionFailedListener, OnClickListener {
 
-	public boolean mSignInClicked, myloginclicked, myregisterclicked,
-			isregistered;
+	public boolean mSignInClicked, myloginclicked, myregisterclicked,isregistered;
 	private ConnectionResult mConnectionResult;
-	
-	private boolean isResumed = false;
-	
-	
+	private ProgressDialog pDialog;
+	JSONObject jobj;
 	public Location location;
 	String personName;
 	public String provider, present_username, present_password, present_mobile,
@@ -55,17 +54,11 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 	String imei, simSerialNumber, devicemobileno;
 	SharedPreferences mycreds;
 	com.google.android.gms.plus.model.people.Person.Image personPhoto;
-	private SignInButton mygooglesigninbtn;
-	
-	// Registerintentservice regintservice;
 	GPSTracker firstgps;
 	/* Request code used to invoke sign in user interactions. */
 	private static final int RC_SIGN_IN = 0;
-	
-
 	/* Client used to interact with Google APIs. */
 	public GoogleApiClient mygoogleapiclient;
-
 	/*
 	 * A flag indicating that a PendingIntent is in progress and prevents us
 	 * from starting further intents.
@@ -73,7 +66,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 	private boolean mIntentInProgress;
     TextView appname;
 	Typeface tf;
-
+	TextToSpeech welcome ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,7 +76,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 				.getAssets(), "fonts/Supercell-Magic_5.ttf");
 		appname = (TextView) findViewById(R.id.appname);
 		appname.setTypeface(tf);
-
+		
 		mygoogleapiclient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this).addApi(Plus.API)
@@ -163,72 +156,6 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 		}
 	}
 
-	public void login(View view) {
-		
-		
-
-		/*
-		 * // new SigninActivity(this).execute(username,password); //
-		 * Toast.makeText(MainActivity.this,"location is" +
-		 * locationManager.getLastKnownLocation(provider).toString(),
-		 * Toast.LENGTH_LONG).show(); if(Double.toString(lat) == null) {
-		 * Toast.makeText(this, "no location", Toast.LENGTH_LONG).show(); }
-		 */
-		// new
-		// SigninActivity(MainActivity.this).execute(present_username,present_password);
-
-		Intent menuintent = new Intent(MainActivity.this,
-				com.hemant.locaroid.Menu.class);
-
-		menuintent.putExtra("username", present_username);
-
-		startActivity(menuintent);
-
-		// if(this.role.toString() == "success")
-		// {
-
-		// startActivity(new Intent(MainActivity.this,
-		// com.hemant.locaroid.Menu.class));
-
-		// }
-
-	}
-
-	public void register(View view) {
-
-
-		new Registeractivity().execute(present_username, present_password,
-				present_mobile);
-
-	}
-
-	public void gsignout(View view) {
-		Toast.makeText(this, "sign out clicked", Toast.LENGTH_SHORT).show();
-	}
-
-	/*
-	 * @Override public void onLocationChanged(Location location) {
-	 * 
-	 * lat = (location.getLatitude()); lng = (location.getLongitude());
-	 * Toast.makeText(MainActivity.this, "location changed",
-	 * Toast.LENGTH_LONG).show(); Log.e(LOCATION_SERVICE, "changed location"); }
-	 * 
-	 * @Override public void onProviderDisabled(String provider) {
-	 * 
-	 * Toast.makeText(MainActivity.this, "providor disabled",
-	 * Toast.LENGTH_LONG).show(); }
-	 * 
-	 * @Override public void onProviderEnabled(String provider) {
-	 * 
-	 * Toast.makeText(this, "Enabled new provider " + provider,
-	 * Toast.LENGTH_SHORT).show(); }
-	 * 
-	 * @Override public void onStatusChanged(String provider, int status, Bundle
-	 * extras) {
-	 * 
-	 * Toast.makeText(this, "Disabled provider " + provider,
-	 * Toast.LENGTH_SHORT).show(); }
-	 */
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -272,8 +199,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
 			picurl = personPhoto.getUrl();
 			profileurl = personGooglePlusProfile.toString();
-			// picurl =
-			// "https://m.ak.fbcdn.net/photos-c.ak/hphotos-ak-xfa1/v/t1.0-0/10414577_898043200224001_7203156539554376376_n.jpg";
+			
 			Toast.makeText(MainActivity.this,
 					"hey! " + personName + " is connected", Toast.LENGTH_SHORT)
 					.show();
@@ -281,17 +207,11 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			// Registeractivity(this).execute(present_username,currentPerson.getBirthday().toString(),"0");
 			// firstgps.getuname(present_username);
 			
-				new Registeractivity().execute(present_username);
+				//new Registeractivity().execute(present_username);
 				Log.d(personName, "register called");
+				new register().execute(Plus.AccountApi.getAccountName(mygoogleapiclient));
 		
-			Intent menuintent = new Intent(MainActivity.this,
-					com.hemant.locaroid.Menu.class);
-			menuintent.putExtra("username", present_username);
-			menuintent.putExtra("picurl", picurl);
-			menuintent.putExtra("profileurl", profileurl);
-			menuintent.putExtra("gname", personName);
-			ActivityCompat.finishAffinity(this);
-			startActivity(menuintent);
+			
 		}
 	}
 
@@ -351,7 +271,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 		// TODO Auto-generated method stub
 
 		if (view.getId() == R.id.googlesignin
-				&& !mygoogleapiclient.isConnecting()) {
+				&& ! mygoogleapiclient.isConnecting()) {
 			Toast.makeText(this, "sign in clicked", Toast.LENGTH_SHORT).show();
 			mSignInClicked = true;
 			resolveSignInError();
@@ -441,27 +361,15 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 		return super.onOptionsItemSelected(item);
 	}
 
-	
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-		isResumed = true;
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		
-		isResumed = false;
 	}
-
-	
-	
-
-	
-
-	
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -476,7 +384,71 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 		
 	}
 
-	
+	private class register extends AsyncTask<String, String, JSONObject> {
+		
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Authenticating ...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+
+		@Override
+		protected JSONObject doInBackground(String... arg0) {
+		
+			try {
+
+				String username = arg0[0];
+				// String password = (String)arg0[1];
+				// String mobile = (String)arg0[2];
+				//String link ="http://10.0.2.2:82/locaroid/registerwithemailonly.php?username="+username;
+				String link = "http://locationservices.site40.net/locaroid/registerwithemailonly.php?username="+username;
+				HttpClient client = new DefaultHttpClient();
+				HttpGet request = new HttpGet();
+				request.setURI(new URI(link));
+				HttpResponse response = client.execute(request);
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						response.getEntity().getContent()));
+
+				StringBuffer sb = new StringBuffer("");
+				String line = "";
+				while ((line = in.readLine()) != null) {
+					sb.append(line);
+					break;
+				}
+				in.close();
+				jobj = new JSONObject(sb.toString());
+				Log.e("Register JSON string", sb.toString());
+
+			} catch (Exception e) {
+				Log.e(" Register JSON Parser", "Error parsing data " + e.toString());
+			}
+			return jobj;
+
+		}
+
+		
+
+		@Override
+		protected void onPostExecute(JSONObject result) {
+
+			pDialog.dismiss();
+			//Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
+			Intent menuintent = new Intent(MainActivity.this,
+					com.hemant.locaroid.Menu.class);
+			menuintent.putExtra("username", present_username);
+			menuintent.putExtra("picurl", picurl);
+			menuintent.putExtra("profileurl", profileurl);
+			menuintent.putExtra("gname", personName);
+			//ActivityCompat.finishAffinity(MainActivity.this);
+			startActivity(menuintent);
+		}
+	}
 
 	
 

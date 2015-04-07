@@ -22,8 +22,7 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -49,7 +48,7 @@ public class getdistancelist extends Activity  {
 	GPSTracker gps;
 	MediaPlayer mp,mp1;
 	Animation btnanim;
-	RecyclerView rv;
+	//RecyclerView rv;
 
 	// public String url =
 	// "http://10.0.2.2:82/locaroid/findwithlatlng.php?latitude=37&longitude=-122&latitude=37&radius=255555";
@@ -96,14 +95,8 @@ public class getdistancelist extends Activity  {
 
 		// latitude =
 		// longitude = mylng;
-		// url =
-		// "http://10.0.2.2:82/locaroid/findwithlatlng.php?latitude="+latitude+"&longitude="+longitude+"&latitude="+latitude+"&radius=1000000";
-		url = "http://locationservices.site40.net/locaroid/findwithlatlng.php?latitude="
-				+ latitude
-				+ "&longitude="
-				+ longitude
-				+ "&latitude="
-				+ latitude + "&radius=25";
+		// url = "http://10.0.2.2:82/locaroid/findwithlatlng.php?latitude="+latitude+"&longitude="+longitude+"&latitude="+latitude+"&radius=1000000";
+		url = "http://locationservices.site40.net/locaroid/findwithlatlng.php?latitude="+latitude+"&longitude="+longitude+"&latitude="+latitude+"&radius=1000000";
 		Btngetdata.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

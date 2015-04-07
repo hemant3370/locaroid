@@ -3,24 +3,18 @@ package com.hemant.locaroid;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,8 +23,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class GPSTracker extends Service implements LocationListener {
 
