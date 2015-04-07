@@ -445,7 +445,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			menuintent.putExtra("picurl", picurl);
 			menuintent.putExtra("profileurl", profileurl);
 			menuintent.putExtra("gname", personName);
-			//ActivityCompat.finishAffinity(MainActivity.this);
+			ActivityCompat.finishAffinity(MainActivity.this);
 			startActivity(menuintent);
 		}
 	}
